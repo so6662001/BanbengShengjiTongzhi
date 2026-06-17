@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>版本管理 · 版本更新通知工具</title>
+<link rel="stylesheet" href="assets/style.css" />
+<script src="assets/app.js" defer></script>
+</head>
+<body>
+<div id="admin-root" data-active="version" data-crumb="版本管理">
+
+  <div class="page-head">
+    <div><h1>版本管理</h1><p>多产品、多版本维护，更新内容按「新增 / 优化 / 修复」结构化录入</p></div>
+    <button class="btn primary">＋ 新建版本</button>
+  </div>
+
+  <!-- 产品筛选 -->
+  <div class="card" style="padding:14px 18px;">
+    <div class="flex center wrap gap8">
+      <span class="text-3 small">产品线：</span>
+      <span class="chip on">全部</span>
+      <span class="chip">智控 ERP</span>
+      <span class="chip">云店 SaaS</span>
+      <span class="chip">财务通</span>
+      <span class="chip">智控 ERP（私有化）</span>
+      <span style="flex:1;"></span>
+      <input class="input" style="width:220px;" placeholder="🔍 搜索版本号 / 内容" />
+    </div>
+  </div>
+
+  <div class="grid cols-2 mt16">
+    <!-- 版本列表 -->
+    <div class="card">
+      <div class="card-title"><h3>版本列表</h3><span class="more">共 28 个</span></div>
+      <table class="table">
+        <thead><tr><th>产品 / 版本</th><th>计划发布</th><th>状态</th></tr></thead>
+        <tbody>
+          <tr style="background:#f5f7ff;"><td><div class="bold">智控 ERP · v3.2.0</div><div class="muted">3 项新增 · 4 优化 · 2 修复</div></td><td>06-20 02:00</td><td><span class="status ready">定时待发</span></td></tr>
+          <tr><td><div class="bold">云店 SaaS · v5.8.1</div><div class="muted">1 新增 · 2 优化 · 5 修复</div></td><td>已发布</td><td><span class="status published">已发布</span></td></tr>
+          <tr><td><div class="bold">财务通 · v2.4.0</div><div class="muted">2 新增 · 1 优化 · 1 修复</div></td><td>—</td><td><span class="status review">审批中</span></td></tr>
+          <tr><td><div class="bold">智控 ERP · v3.1.9</div><div class="muted">0 新增 · 1 优化 · 3 修复</div></td><td>已发布</td><td><span class="status published">已发布</span></td></tr>
+          <tr><td><div class="bold">云店 SaaS · v5.9.0</div><div class="muted">5 新增 · 3 优化 · 0 修复</div></td><td>—</td><td><span class="status draft">草稿</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 版本编辑详情 -->
+    <div class="card">
+      <div class="card-title">
+        <h3>编辑：智控 ERP · v3.2.0</h3>
+        <span class="status ready">定时待发</span>
+      </div>
+      <div class="row">
+        <div class="field" style="flex:1;"><label>产品线</label><select class="select"><option>智控 ERP</option></select></div>
+        <div class="field" style="flex:1;"><label>版本号</label><input class="input" value="v3.2.0" /></div>
+      </div>
+      <div class="row">
+        <div class="field" style="flex:1;"><label>发布类型</label><select class="select"><option>正式发布</option><option>灰度发布</option></select></div>
+        <div class="field" style="flex:1;"><label>计划发布时间</label><input class="input" value="2026-06-20 02:00" /></div>
+      </div>
+
+      <div class="field mb0">
+        <label>更新内容条目</label>
+        <div class="flex" style="flex-direction:column; gap:10px;">
+          <div class="flex gap8 center" style="padding:10px 12px;border:1px solid var(--border);border-radius:9px;">
+            <span class="tag add">＋ 新增</span><span style="flex:1;">支持批量开单与一键导入历史订单</span><span class="text-3" style="cursor:pointer;">✎</span>
+          </div>
+          <div class="flex gap8 center" style="padding:10px 12px;border:1px solid var(--border);border-radius:9px;">
+            <span class="tag add">＋ 新增</span><span style="flex:1;">新增移动端审批待办提醒</span><span class="text-3" style="cursor:pointer;">✎</span>
+          </div>
+          <div class="flex gap8 center" style="padding:10px 12px;border:1px solid var(--border);border-radius:9px;">
+            <span class="tag opt">⤴ 优化</span><span style="flex:1;">报表加载速度提升约 40%</span><span class="text-3" style="cursor:pointer;">✎</span>
+          </div>
+          <div class="flex gap8 center" style="padding:10px 12px;border:1px solid var(--border);border-radius:9px;">
+            <span class="tag fix">🔧 修复</span><span style="flex:1;">修复跨月结转偶发金额错误</span><span class="text-3" style="cursor:pointer;">✎</span>
+          </div>
+        </div>
+        <div class="flex gap8 mt16">
+          <button class="btn sm"><span class="tag add" style="padding:0 6px;">＋</span> 新增条目</button>
+          <button class="btn sm">⤴ 优化条目</button>
+          <button class="btn sm">🔧 修复条目</button>
+          <span style="flex:1;"></span>
+          <button class="btn sm ghost">从 Git Tag 导入</button>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <div class="flex gap8">
+        <button class="btn">预览弹窗效果</button>
+        <span style="flex:1;"></span>
+        <button class="btn">保存草稿</button>
+        <button class="btn primary">提交审批 →</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

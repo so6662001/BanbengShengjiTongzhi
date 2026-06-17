@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>更新日志页 · 客户端组件</title>
+<link rel="stylesheet" href="assets/style.css" />
+<style>
+  body{ background:#f5f6fa; }
+  .cl-bar { background:#fff; border-bottom:1px solid var(--border); padding:12px 22px; display:flex; align-items:center; gap:14px; position:sticky; top:0; z-index:5; }
+  .cl-bar h2{ font-size:15px; margin:0; }
+  .cl-wrap{ max-width: 820px; margin: 0 auto; padding: 28px 20px 60px; }
+  .cl-hero{ background:linear-gradient(135deg,#3b5bfd,#7b5bff); color:#fff; border-radius:16px; padding:26px 28px; margin-bottom:20px; }
+  .cl-hero h1{ margin:0 0 6px; font-size:22px; }
+  .cl-hero p{ margin:0; opacity:.9; font-size:13px; }
+  .filters{ display:flex; gap:8px; align-items:center; margin-bottom:18px; flex-wrap:wrap; }
+  .chg2{ display:flex; gap:10px; padding:8px 0; }
+  .chg2 .t{ font-size:14px; }
+  .chg2 .d{ font-size:12.5px; color:var(--text-3); }
+  .note{ font-size:11.5px; color:var(--text-3); margin-left:6px; }
+</style>
+</head>
+<body>
+  <div class="cl-bar">
+    <a class="btn sm ghost" href="index.html">← 返回导航</a>
+    <h2>📜 更新日志页（可嵌入「系统设置 → 关于」）</h2>
+  </div>
+
+  <div class="cl-wrap">
+    <div class="cl-hero">
+      <h1>智控 ERP · 更新日志</h1>
+      <p>了解每个版本带来的新功能、优化与修复</p>
+    </div>
+
+    <div class="filters">
+      <input class="input" style="max-width:280px;" placeholder="🔍 搜索更新内容" />
+      <span style="flex:1;"></span>
+      <span class="chip on">全部</span>
+      <span class="chip"><span class="tag add" style="padding:0 6px;">＋</span> 新增</span>
+      <span class="chip"><span class="tag opt" style="padding:0 6px;">⤴</span> 优化</span>
+      <span class="chip"><span class="tag fix" style="padding:0 6px;">🔧</span> 修复</span>
+    </div>
+
+    <div class="card">
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="flex center wrap"><span class="ver">v3.2.0</span><span class="date">2026-06-20</span><span class="tag opt note" style="margin-left:8px;">最新</span></div>
+          <div class="mt8">
+            <div class="chg2"><span class="tag add">＋ 新增</span><div><div class="t">批量开单与一键导入历史订单</div><div class="d">支持 Excel 模板批量导入</div></div></div>
+            <div class="chg2"><span class="tag add">＋ 新增</span><div><div class="t">移动端审批待办提醒</div></div></div>
+            <div class="chg2"><span class="tag opt">⤴ 优化</span><div><div class="t">报表加载速度提升约 40%</div></div></div>
+            <div class="chg2"><span class="tag fix">🔧 修复</span><div><div class="t">修复跨月结转偶发金额错误</div></div></div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="flex center wrap"><span class="ver">v3.1.9</span><span class="date">2026-05-28</span></div>
+          <div class="mt8">
+            <div class="chg2"><span class="tag opt">⤴ 优化</span><div><div class="t">登录加载与首页渲染速度优化</div></div></div>
+            <div class="chg2"><span class="tag fix">🔧 修复</span><div><div class="t">修复部分客户导出 PDF 缺页问题</div></div></div>
+            <div class="chg2"><span class="tag fix">🔧 修复</span><div><div class="t">修复库存预警阈值不生效</div></div></div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="flex center wrap"><span class="ver">v3.1.8</span><span class="date">2026-05-06</span></div>
+          <div class="mt8">
+            <div class="chg2"><span class="tag add">＋ 新增</span><div><div class="t">支持自定义打印模板</div></div></div>
+            <div class="chg2"><span class="tag opt">⤴ 优化</span><div><div class="t">客户资料批量编辑体验</div></div></div>
+          </div>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:10px;"><button class="btn">加载更多历史版本</button></div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>数据看板 · 版本更新通知工具</title>
+<link rel="stylesheet" href="assets/style.css" />
+<script src="assets/app.js" defer></script>
+</head>
+<body>
+<div id="admin-root" data-active="dashboard" data-crumb="数据看板">
+
+  <div class="page-head">
+    <div>
+      <h1>数据看板</h1>
+      <p>实时监控公告触达、阅读率、升级完成率与客户反馈</p>
+    </div>
+    <div class="flex gap8">
+      <select class="select" style="width:160px;">
+        <option>全部产品</option><option>智控 ERP</option><option>云店 SaaS</option><option>财务通</option>
+      </select>
+      <select class="select" style="width:140px;">
+        <option>近 30 天</option><option>近 7 天</option><option>本季度</option>
+      </select>
+      <button class="btn">导出报表</button>
+    </div>
+  </div>
+
+  <!-- 指标卡 -->
+  <div class="grid cols-4">
+    <div class="card stat">
+      <div class="ico-bubble" style="background:var(--primary-soft)">📨</div>
+      <span class="label">本期触达客户</span>
+      <span class="value">12,480</span>
+      <span class="delta up">▲ 8.2% 环比</span>
+    </div>
+    <div class="card stat">
+      <div class="ico-bubble" style="background:var(--success-soft)">👁️</div>
+      <span class="label">平均弹窗阅读率</span>
+      <span class="value">76.4%</span>
+      <span class="delta up">▲ 3.1%</span>
+    </div>
+    <div class="card stat">
+      <div class="ico-bubble" style="background:var(--warning-soft)">⬆️</div>
+      <span class="label">升级完成率</span>
+      <span class="value">68.9%</span>
+      <span class="delta down">▼ 1.4%</span>
+    </div>
+    <div class="card stat">
+      <div class="ico-bubble" style="background:var(--danger-soft)">💬</div>
+      <span class="label">收集反馈</span>
+      <span class="value">342</span>
+      <span class="delta up">▲ 26 条</span>
+    </div>
+  </div>
+
+  <div class="grid cols-2 mt16">
+    <!-- 漏斗 -->
+    <div class="card">
+      <div class="card-title"><h3>触达漏斗 · 智控 ERP v3.2.0</h3><span class="more">查看明细</span></div>
+      <div class="funnel">
+        <div class="funnel-row"><span class="fl-label">目标客户</span><div class="fl-bar"><span style="width:100%">8,200</span></div><span class="fl-val">100%</span></div>
+        <div class="funnel-row"><span class="fl-label">成功送达</span><div class="fl-bar"><span style="width:94%">7,708</span></div><span class="fl-val">94.0%</span></div>
+        <div class="funnel-row"><span class="fl-label">弹窗曝光</span><div class="fl-bar"><span style="width:82%">6,724</span></div><span class="fl-val">82.0%</span></div>
+        <div class="funnel-row"><span class="fl-label">已读</span><div class="fl-bar"><span style="width:71%">5,822</span></div><span class="fl-val">71.0%</span></div>
+        <div class="funnel-row"><span class="fl-label">升级完成</span><div class="fl-bar"><span style="width:61%">5,002</span></div><span class="fl-val">61.0%</span></div>
+      </div>
+    </div>
+
+    <!-- 渠道效果 -->
+    <div class="card">
+      <div class="card-title"><h3>渠道触达效果</h3><span class="more">本期</span></div>
+      <table class="table">
+        <thead><tr><th>渠道</th><th>送达</th><th>阅读率</th><th>趋势</th></tr></thead>
+        <tbody>
+          <tr><td><span class="tag gray dot">站内信</span></td><td>7,708</td><td class="bold">78.5%</td>
+            <td style="width:140px;"><div class="progress green"><span style="width:78.5%"></span></div></td></tr>
+          <tr><td><span class="tag opt dot">企业微信</span></td><td>6,140</td><td class="bold">71.2%</td>
+            <td><div class="progress"><span style="width:71.2%"></span></div></td></tr>
+          <tr><td><span class="tag gray dot">邮件 <small>(二期)</small></span></td><td class="muted">—</td><td class="muted">未启用</td>
+            <td><div class="progress orange"><span style="width:0%"></span></div></td></tr>
+          <tr><td><span class="tag gray dot">短信 <small>(二期)</small></span></td><td class="muted">—</td><td class="muted">未启用</td>
+            <td><div class="progress orange"><span style="width:0%"></span></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="grid cols-2 mt16">
+    <!-- 按服务器升级完成率 -->
+    <div class="card">
+      <div class="card-title"><h3>按服务器 · 升级完成率</h3><span class="more">v3.2.0</span></div>
+      <table class="table">
+        <thead><tr><th>服务器</th><th>客户数</th><th>已升级</th><th>完成率</th></tr></thead>
+        <tbody>
+          <tr><td>华东生产 SH-01</td><td>3,210</td><td>2,510</td><td style="width:160px;"><div class="flex center gap8"><div class="progress green" style="flex:1;"><span style="width:78%"></span></div><span class="small bold">78%</span></div></td></tr>
+          <tr><td>华北生产 BJ-02</td><td>2,640</td><td>1,690</td><td><div class="flex center gap8"><div class="progress" style="flex:1;"><span style="width:64%"></span></div><span class="small bold">64%</span></div></td></tr>
+          <tr><td>华南生产 GZ-03</td><td>1,820</td><td>980</td><td><div class="flex center gap8"><div class="progress orange" style="flex:1;"><span style="width:54%"></span></div><span class="small bold">54%</span></div></td></tr>
+          <tr><td>私有化 · 客户A</td><td>530</td><td>480</td><td><div class="flex center gap8"><div class="progress green" style="flex:1;"><span style="width:91%"></span></div><span class="small bold">91%</span></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 最新反馈 -->
+    <div class="card">
+      <div class="card-title"><h3>最新客户反馈</h3><span class="more">查看全部</span></div>
+      <div class="flex" style="flex-direction:column; gap:14px;">
+        <div class="flex gap12">
+          <div class="avatar" style="background:#1fb979;flex-shrink:0;">优</div>
+          <div><div class="flex center gap8"><b>优品商贸</b><span class="tag gray">智控 ERP · 华东</span><span class="small text-3">2小时前</span></div>
+          <div class="text-2 small">新版批量开单很顺手，但导出 Excel 偶尔卡顿，希望优化。 ⭐⭐⭐⭐</div></div>
+        </div>
+        <div class="divider" style="margin:0;"></div>
+        <div class="flex gap12">
+          <div class="avatar" style="background:#ff9f1c;flex-shrink:0;">恒</div>
+          <div><div class="flex center gap8"><b>恒丰制造</b><span class="tag gray">财务通 · 华北</span><span class="small text-3">5小时前</span></div>
+          <div class="text-2 small">升级后报表加载更快了，点赞！ ⭐⭐⭐⭐⭐</div></div>
+        </div>
+        <div class="divider" style="margin:0;"></div>
+        <div class="flex gap12">
+          <div class="avatar" style="background:#f3506c;flex-shrink:0;">康</div>
+          <div><div class="flex center gap8"><b>康程物流</b><span class="tag gray">云店 SaaS</span><span class="small text-3">昨天</span></div>
+          <div class="text-2 small">预告提前 3 天收到，安排升级很从容。 ⭐⭐⭐⭐⭐</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

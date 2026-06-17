@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>客户分层圈选 · 版本更新通知工具</title>
+<link rel="stylesheet" href="assets/style.css" />
+<script src="assets/app.js" defer></script>
+</head>
+<body>
+<div id="admin-root" data-active="audience" data-crumb="客户分层">
+
+  <div class="page-head">
+    <div><h1>客户分层圈选</h1><p>按 套餐 ∩ 行业 ∩ 使用产品 ∩ 服务器 组合圈定推送人群，可保存为人群模板复用</p></div>
+    <button class="btn primary">保存为人群模板</button>
+  </div>
+
+  <div class="grid cols-2">
+    <!-- 圈选条件 -->
+    <div class="card">
+      <div class="card-title"><h3>圈选条件</h3><span class="more">逻辑：条件之间取交集</span></div>
+
+      <div class="field"><label>使用产品</label>
+        <div class="flex wrap gap8"><span class="chip on">智控 ERP</span><span class="chip">云店 SaaS</span><span class="chip">财务通</span></div>
+      </div>
+      <div class="field"><label>客户套餐</label>
+        <div class="flex wrap gap8"><span class="chip on">旗舰版</span><span class="chip on">专业版</span><span class="chip">标准版</span><span class="chip">基础版</span></div>
+      </div>
+      <div class="field"><label>客户行业</label>
+        <div class="flex wrap gap8"><span class="chip on">商贸零售</span><span class="chip">制造业</span><span class="chip on">物流仓储</span><span class="chip">餐饮</span><span class="chip">服务业</span></div>
+      </div>
+      <div class="field"><label>归属服务器</label>
+        <div class="flex wrap gap8"><span class="chip on">华东生产 SH-01</span><span class="chip on">华北生产 BJ-02</span><span class="chip">华南生产 GZ-03</span><span class="chip">私有化客户</span></div>
+      </div>
+      <div class="field mb0"><label>当前版本（可选，用于精准触达未升级客户）</label>
+        <div class="flex gap8"><select class="select"><option>低于 v3.2.0（待升级）</option><option>不限</option><option>等于指定版本</option></select></div>
+      </div>
+    </div>
+
+    <!-- 命中预览 -->
+    <div class="card">
+      <div class="card-title"><h3>命中预览</h3><span class="more">实时计算</span></div>
+      <div style="text-align:center;padding:18px 0 10px;">
+        <div class="text-3 small">符合条件客户数</div>
+        <div style="font-size:46px;font-weight:800;color:var(--primary);letter-spacing:-.02em;">3,860</div>
+        <div class="text-3 small">约占目标产品总客户 47%</div>
+      </div>
+      <div class="divider"></div>
+      <div class="small text-2 bold" style="margin-bottom:8px;">分布概览</div>
+      <table class="table">
+        <tbody>
+          <tr><td>商贸零售</td><td style="width:200px;"><div class="progress"><span style="width:62%"></span></div></td><td class="muted">2,393</td></tr>
+          <tr><td>物流仓储</td><td><div class="progress"><span style="width:38%"></span></div></td><td class="muted">1,467</td></tr>
+        </tbody>
+      </table>
+      <div class="divider"></div>
+      <div class="flex gap8">
+        <button class="btn ghost">查看命中客户清单</button>
+        <span style="flex:1;"></span>
+        <button class="btn primary">用此人群创建发布 →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 已保存人群模板 -->
+  <div class="card mt16">
+    <div class="card-title"><h3>已保存人群模板</h3><span class="more">共 9 个</span></div>
+    <table class="table">
+      <thead><tr><th>模板名称</th><th>条件摘要</th><th>命中客户</th><th>最近使用</th><th>操作</th></tr></thead>
+      <tbody>
+        <tr><td class="bold">ERP 旗舰客户·华东华北</td><td class="muted">智控ERP · 旗舰/专业 · SH-01,BJ-02</td><td>3,860</td><td>2026-06-10</td><td><a class="btn sm ghost">应用</a></td></tr>
+        <tr><td class="bold">云店待升级客户</td><td class="muted">云店SaaS · 版本&lt;v5.8</td><td>1,240</td><td>2026-06-08</td><td><a class="btn sm ghost">应用</a></td></tr>
+        <tr><td class="bold">财务通全量</td><td class="muted">财务通 · 全部</td><td>530</td><td>2026-06-01</td><td><a class="btn sm ghost">应用</a></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+</body>
+</html>

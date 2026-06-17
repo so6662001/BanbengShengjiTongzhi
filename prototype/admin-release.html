@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>发布流程 · 版本更新通知工具</title>
+<link rel="stylesheet" href="assets/style.css" />
+<script src="assets/app.js" defer></script>
+</head>
+<body>
+<div id="admin-root" data-active="release" data-crumb="发布流程">
+
+  <div class="page-head">
+    <div><h1>发布流程</h1><p>定时发布 + 事前预告 + 多渠道投递，一次内容可推送给多个人群</p></div>
+    <button class="btn primary">＋ 新建发布计划</button>
+  </div>
+
+  <!-- 流程进度 -->
+  <div class="card">
+    <div class="steps">
+      <div class="step done"><span class="num">✓</span><span class="stxt">选择版本内容</span><span class="line"></span></div>
+      <div class="step done"><span class="num">✓</span><span class="stxt">选择推送人群</span><span class="line"></span></div>
+      <div class="step active"><span class="num">3</span><span class="stxt">渠道与时间</span><span class="line"></span></div>
+      <div class="step"><span class="num">4</span><span class="stxt">提交审批</span><span class="line"></span></div>
+      <div class="step"><span class="num">5</span><span class="stxt">定时发布</span></div>
+    </div>
+  </div>
+
+  <div class="grid cols-2 mt16">
+    <!-- 配置 -->
+    <div class="card">
+      <div class="card-title"><h3>发布配置</h3></div>
+      <div class="field"><label>关联版本</label><select class="select"><option>智控 ERP · v3.2.0（3新增/4优化/2修复）</option></select></div>
+      <div class="field"><label>推送人群</label>
+        <div class="flex center gap8" style="padding:9px 12px;border:1px solid var(--border);border-radius:9px;background:#fafbff;">
+          <span class="tag opt">ERP 旗舰客户·华东华北</span><span class="text-3 small">命中 3,860 客户</span><span style="flex:1;"></span><a class="small" style="color:var(--primary);cursor:pointer;">更换</a>
+        </div>
+      </div>
+
+      <div class="field"><label>推送渠道（一期）</label>
+        <div class="flex wrap gap8">
+          <span class="chip on">📥 站内信 / 软件内弹窗</span>
+          <span class="chip on">💬 企业微信</span>
+          <span class="chip" style="opacity:.55;">✉️ 邮件（二期）</span>
+          <span class="chip" style="opacity:.55;">📱 短信（二期）</span>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="field"><label>正式发布时间</label>
+        <div class="flex gap8 center">
+          <input class="input" value="2026-06-20 02:00" />
+          <label class="flex center gap8 small text-2" style="white-space:nowrap;"><input type="checkbox" checked /> 定时发布</label>
+        </div>
+      </div>
+
+      <div class="field mb0"><label>事前预告（升级前自动预通知）</label>
+        <div class="flex wrap gap8">
+          <span class="chip on">提前 3 天</span>
+          <span class="chip on">提前 1 天</span>
+          <span class="chip">提前 1 小时</span>
+          <span class="chip">自定义</span>
+        </div>
+        <div class="small text-3 mt8">系统将在 06-17 02:00、06-19 02:00 自动向人群发送升级预告（幂等，不重复打扰）。</div>
+      </div>
+
+      <div class="divider"></div>
+      <div class="flex gap8"><button class="btn">预览文案</button><span style="flex:1;"></span><button class="btn">存草稿</button><button class="btn primary">提交审批 →</button></div>
+    </div>
+
+    <!-- 时间轴预览 -->
+    <div class="card">
+      <div class="card-title"><h3>投递时间轴预览</h3><span class="more">v3.2.0</span></div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div><span class="ver" style="font-size:14px;">事前预告 · 第 1 次</span><span class="date">2026-06-17 02:00</span></div>
+          <div class="text-2 small mt8">渠道：站内信 + 企微 · 文案：「智控 ERP 将于 06-20 凌晨升级 v3.2.0，请提前安排」</div>
+        </div>
+        <div class="tl-item">
+          <div><span class="ver" style="font-size:14px;">事前预告 · 第 2 次</span><span class="date">2026-06-19 02:00</span></div>
+          <div class="text-2 small mt8">渠道：站内信 + 企微 · 文案：「明日凌晨升级提醒」</div>
+        </div>
+        <div class="tl-item">
+          <div><span class="ver" style="font-size:14px;color:var(--primary);">正式发布</span><span class="date">2026-06-20 02:00</span></div>
+          <div class="text-2 small mt8">发布更新公告 → 客户端启动弹窗 + 企微图文卡片，含新增/优化/修复明细。</div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="card" style="background:var(--warning-soft);border-color:#ffe2b8;box-shadow:none;padding:12px 14px;">
+        <div class="flex center gap8"><span style="font-size:18px;">⚠️</span><div class="small text-2">发布后如发现问题，可在此处一键 <b>撤回 / 停止推送</b>，未触达人群将不再发送。</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 计划列表 -->
+  <div class="card mt16">
+    <div class="card-title"><h3>发布计划列表</h3><span class="more">共 16 条</span></div>
+    <table class="table">
+      <thead><tr><th>版本</th><th>人群</th><th>渠道</th><th>预告</th><th>发布时间</th><th>状态</th><th>操作</th></tr></thead>
+      <tbody>
+        <tr><td class="bold">智控 ERP v3.2.0</td><td>ERP旗舰·华东华北</td><td><span class="tag gray">站内</span> <span class="tag opt">企微</span></td><td>3天/1天</td><td>06-20 02:00</td><td><span class="status ready">定时待发</span></td><td><a class="btn sm ghost">查看</a></td></tr>
+        <tr><td class="bold">云店 SaaS v5.8.1</td><td>云店待升级</td><td><span class="tag gray">站内</span></td><td>1天</td><td>已发布</td><td><span class="status published">已发布</span></td><td><a class="btn sm danger">撤回</a></td></tr>
+        <tr><td class="bold">财务通 v2.4.0</td><td>财务通全量</td><td><span class="tag gray">站内</span> <span class="tag opt">企微</span></td><td>3天</td><td>待定</td><td><span class="status review">审批中</span></td><td><a class="btn sm ghost">查看</a></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+</body>
+</html>
