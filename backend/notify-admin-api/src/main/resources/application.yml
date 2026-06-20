@@ -34,7 +34,10 @@ notify:
     secret: release-notify-secret-key-please-change-in-prod-0123456789
     expire-seconds: 86400
   wecom:
-    enabled: false
+    enabled: false           # 置 true 并填写下列参数后启用真实企微推送
+    corp-id: ""
+    secret: ""
+    agent-id: 0
   job:
     pre-notice-cron: "0 */5 * * * ?"
 
