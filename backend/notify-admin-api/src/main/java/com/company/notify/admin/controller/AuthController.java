@@ -2,6 +2,7 @@ package com.company.notify.admin.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.company.notify.admin.security.JwtUtil;
+import com.company.notify.admin.security.PasswordHelper;
 import com.company.notify.common.api.Result;
 import com.company.notify.common.exception.BizException;
 import com.company.notify.common.exception.ErrorCode;
@@ -27,14 +28,15 @@ public class AuthController {
 
     private final SysUserMapper sysUserMapper;
     private final JwtUtil jwtUtil;
+    private final PasswordHelper passwordHelper;
 
     @Operation(summary = "登录")
     @PostMapping("/login")
     public Result<Map<String, Object>> login(@RequestBody LoginReq req) {
         SysUser user = sysUserMapper.selectOne(new LambdaQueryWrapper<SysUser>()
                 .eq(SysUser::getUsername, req.getUsername()).last("limit 1"));
-        // 演示用明文比较，生产应使用 BCrypt 校验
-        if (user == null || !user.getPassword().equals(req.getPassword())) {
+        // BCrypt 校验（兼容历史明文，见 PasswordHelper）
+        if (user == null || !passwordHelper.matches(req.getPassword(), user.getPassword())) {
             throw BizException.of(ErrorCode.UNAUTHORIZED, "用户名或密码错误");
         }
         String token = jwtUtil.generate(user.getId(), user.getUsername());

@@ -34,7 +34,17 @@ mvn compile           # 全量编译
 mvn -pl notify-service test   # 服务层单测
 ```
 
-## 后续可替换项（已留扩展点）
-- RocketMQ 替换 `PushDispatcher` 的 @Async；XXL-JOB 替换 `PreNoticeJob`。
-- 企业微信真实 API 接入 `WeComChannel`；新增邮件/短信渠道实现 `MessageChannel`。
-- 登录密码改 BCrypt；客户端接口叠加签名校验 + 限流（Sentinel）。
+## 可切换基础设施（配置开关，默认走可测试的轻量实现）
+| 能力 | 默认 | 切换为生产实现 |
+|---|---|---|
+| 推送队列 | `notify.mq.mode=inprocess`（@Async） | `=rocketmq` + 配 `rocketmq.name-server`（消费者重试/死信由 MQ 承接） |
+| 定时任务 | `notify.job.mode=spring`（@Scheduled） | `=xxl` + 配 `xxl.job.admin.addresses`（JobHandler=`preNoticeJobHandler`） |
+| 企业微信 | MOCK 日志 | `notify.wecom.enabled=true` + corp-id/secret/agent-id（真实 textcard） |
+| 邮件 | 关闭 | `notify.email.enabled=true` + `spring.mail.*`（JavaMailSender） |
+| 短信 | 关闭 | `notify.sms.enabled=true` + gateway-url/api-key（HTTP 网关） |
+| 钉钉 | 关闭 | `notify.dingtalk.enabled=true` + webhook/secret（自定义机器人加签） |
+| 登录密码 | BCrypt（兼容历史明文） | 生产用 `PasswordHelper.encode` 存 BCrypt |
+| 客户端鉴权 | 身份+限流 | `notify.client.sign-enabled=true` 开启签名校验 |
+
+## 测试
+- `mvn test`：单测（状态机/版本比较/审批引擎 Mockito）+ H2 上下文加载 + **端到端全链路** + **真实 HTTP 冒烟(随机端口 Tomcat)**。

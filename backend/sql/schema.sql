@@ -47,6 +47,8 @@ CREATE TABLE customer (
   package_level  VARCHAR(16)  NULL COMMENT 'FLAGSHIP/PRO/STANDARD/BASIC',
   status         VARCHAR(16)  NOT NULL DEFAULT 'ENABLED',
   wecom_user_ids VARCHAR(512) NULL,
+  email          VARCHAR(128) NULL,
+  phone          VARCHAR(32)  NULL,
   create_by BIGINT NULL, create_time DATETIME NULL, update_by BIGINT NULL, update_time DATETIME NULL, deleted TINYINT NOT NULL DEFAULT 0,
   KEY idx_customer_industry (industry),
   KEY idx_customer_package (package_level)

@@ -34,6 +34,7 @@ CREATE TABLE server_product (
 
 CREATE TABLE customer (
   id BIGINT PRIMARY KEY, name VARCHAR(128), industry VARCHAR(64), package_level VARCHAR(16), status VARCHAR(16), wecom_user_ids VARCHAR(512),
+  email VARCHAR(128), phone VARCHAR(32),
   create_by BIGINT, create_time TIMESTAMP, update_by BIGINT, update_time TIMESTAMP, deleted TINYINT DEFAULT 0);
 
 CREATE TABLE customer_product (

@@ -17,4 +17,8 @@ public class Customer extends BaseEntity {
     private CommonStatus status;
     /** 企业微信接收人 userid 列表，逗号分隔 */
     private String wecomUserIds;
+    /** 邮件收件人（邮件渠道用） */
+    private String email;
+    /** 手机号（短信渠道用） */
+    private String phone;
 }
