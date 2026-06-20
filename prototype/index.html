@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>版本更新通知工具 · 原型导航</title>
+<link rel="stylesheet" href="assets/style.css" />
+<style>
+  .hero { background: linear-gradient(135deg,#3b5bfd,#7b5bff); color:#fff; padding: 48px 40px; }
+  .hero h1 { font-size: 30px; margin: 0 0 10px; }
+  .hero p { margin: 0; opacity: .9; max-width: 720px; }
+  .wrapper { max-width: 1120px; margin: 0 auto; padding: 0 24px 60px; }
+  .nav-card { display:flex; flex-direction:column; gap:6px; cursor:pointer; transition: all .18s; text-decoration:none; }
+  .nav-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); border-color:#c2cdff; }
+  .nav-card .ic { width:46px; height:46px; border-radius:12px; display:grid; place-items:center; font-size:22px; background: var(--primary-soft); margin-bottom:6px; }
+  .nav-card h3 { margin:0; font-size:15.5px; }
+  .nav-card p { margin:0; color: var(--text-3); font-size:12.5px; }
+  .sec-title { margin: 30px 0 14px; font-size: 14px; color: var(--text-3); letter-spacing:.04em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+  <div class="hero">
+    <div class="wrapper" style="padding-bottom:0;">
+      <h1>🛰️ 版本更新通知工具 · 静态效果原型</h1>
+      <p>面向多产品、多服务器、多版本的「升级事前预告 + 事后告知」一体化平台。以下为后台管理端与客户端各页面的视觉原型（演示数据，未接后端）。</p>
+    </div>
+  </div>
+  <div class="wrapper">
+    <div class="sec-title">后台管理端</div>
+    <div class="grid cols-3">
+      <a class="card nav-card" href="admin-dashboard.html"><div class="ic">📊</div><h3>数据看板</h3><p>触达漏斗 · 阅读率 · 升级完成率 · 反馈</p></a>
+      <a class="card nav-card" href="admin-version.html"><div class="ic">🗂️</div><h3>版本管理</h3><p>多产品多版本 · 新增/优化/修复条目</p></a>
+      <a class="card nav-card" href="admin-server.html"><div class="ic">🖥️</div><h3>服务器管理</h3><p>多服务器 · 客户归属 · 灰度范围</p></a>
+      <a class="card nav-card" href="admin-audience.html"><div class="ic">🎯</div><h3>客户分层圈选</h3><p>套餐∩行业∩产品∩服务器 · 实时命中数</p></a>
+      <a class="card nav-card" href="admin-release.html"><div class="ic">🚀</div><h3>发布流程</h3><p>定时发布 · 事前预告 · 多渠道投递</p></a>
+      <a class="card nav-card" href="admin-approval.html"><div class="ic">✅</div><h3>审批中心</h3><p>按产品线多级审批 · 留痕</p></a>
+    </div>
+    <div class="sec-title">客户端 / 通用组件</div>
+    <div class="grid cols-3">
+      <a class="card nav-card" href="client-popup.html"><div class="ic">🔔</div><h3>软件内更新弹窗</h3><p>预告 / 正式更新 · 强弱提醒 · 已读上报</p></a>
+      <a class="card nav-card" href="client-changelog.html"><div class="ic">📜</div><h3>更新日志页</h3><p>可嵌入系统设置 · 时间线 · 分类筛选</p></a>
+    </div>
+  </div>
+</body>
+</html>

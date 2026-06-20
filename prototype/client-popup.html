@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>软件内更新弹窗 · 客户端组件</title>
+<link rel="stylesheet" href="assets/style.css" />
+<style>
+  body { background:#e9edf6; }
+  .demo-bar { background:#fff; border-bottom:1px solid var(--border); padding:12px 22px; display:flex; align-items:center; gap:14px; position:sticky; top:0; z-index:5; }
+  .demo-bar h2 { font-size:15px; margin:0; }
+  .stage { padding: 30px; display:grid; place-items:center; min-height: calc(100vh - 56px); }
+  /* faux app window */
+  .app-window { width: min(960px, 96vw); height: 600px; background:#fff; border-radius:14px; box-shadow: var(--shadow-lg); overflow:hidden; position:relative; }
+  .app-top { height:46px; background:#1f2740; display:flex; align-items:center; gap:8px; padding:0 16px; color:#cfd6ea; font-size:13px; }
+  .dot { width:11px; height:11px; border-radius:50%; }
+  .app-body { display:flex; height:calc(100% - 46px); filter: blur(1px); opacity:.55; pointer-events:none; }
+  .app-side { width:180px; background:#f4f6fb; border-right:1px solid var(--border); padding:14px; }
+  .app-side .li { padding:9px 10px; border-radius:8px; color:#5a6273; font-size:13px; margin-bottom:4px; }
+  .app-side .li.on { background:var(--primary); color:#fff; }
+  .app-main { flex:1; padding:18px; }
+  .skeleton { height:14px; background:#eef0f5; border-radius:6px; margin-bottom:12px; }
+
+  /* overlay + popup */
+  .overlay { position:absolute; inset:0; background:rgba(20,26,43,.45); display:grid; place-items:center; }
+  .popup { width: 460px; max-width:92%; background:#fff; border-radius:16px; overflow:hidden; box-shadow: var(--shadow-lg); animation: pop .25s ease; }
+  @keyframes pop { from{transform:translateY(14px) scale(.97);opacity:0;} to{transform:none;opacity:1;} }
+  .popup-hd { padding:20px 22px; color:#fff; position:relative; }
+  .popup-hd.update { background: linear-gradient(135deg,#3b5bfd,#7b5bff); }
+  .popup-hd.notice { background: linear-gradient(135deg,#ff9f1c,#ff7a59); }
+  .popup-hd .kicker { font-size:12px; opacity:.9; letter-spacing:.05em; }
+  .popup-hd h3 { margin:6px 0 4px; font-size:19px; }
+  .popup-hd .sub { font-size:12.5px; opacity:.92; }
+  .popup-hd .close { position:absolute; right:16px; top:16px; cursor:pointer; opacity:.8; font-size:16px; }
+  .popup-bd { padding:18px 22px; max-height:300px; overflow:auto; }
+  .chg { display:flex; gap:10px; padding:9px 0; border-bottom:1px dashed var(--border); }
+  .chg:last-child{border-bottom:none;}
+  .chg .t { font-size:13.5px; color:var(--text); }
+  .chg .d { font-size:12.5px; color:var(--text-3); }
+  .popup-ft { padding:14px 22px; border-top:1px solid var(--border); display:flex; align-items:center; gap:10px; }
+  .countdown { background:#fff7e9; color:#b9710b; border-radius:10px; padding:10px 14px; font-size:13px; text-align:center; margin-bottom:4px; }
+  .switcher { display:flex; gap:8px; }
+</style>
+</head>
+<body>
+  <div class="demo-bar">
+    <a class="btn sm ghost" href="index.html">← 返回导航</a>
+    <h2>🔔 软件内更新弹窗（通用组件预览）</h2>
+    <span style="flex:1;"></span>
+    <span class="text-3 small">切换样式：</span>
+    <div class="switcher">
+      <button class="btn sm primary" onclick="show('update')">正式更新</button>
+      <button class="btn sm" onclick="show('notice')">事前预告</button>
+    </div>
+  </div>
+
+  <div class="stage">
+    <div class="app-window">
+      <div class="app-top">
+        <span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span>
+        <span style="margin-left:8px;">智控 ERP · 客户端 v3.1.9</span>
+      </div>
+      <div class="app-body">
+        <div class="app-side">
+          <div class="li on">工作台</div><div class="li">销售开单</div><div class="li">库存管理</div><div class="li">财务报表</div><div class="li">系统设置</div>
+        </div>
+        <div class="app-main">
+          <div class="skeleton" style="width:40%;height:20px;"></div>
+          <div class="skeleton" style="width:90%;"></div><div class="skeleton" style="width:80%;"></div><div class="skeleton" style="width:86%;"></div><div class="skeleton" style="width:60%;"></div>
+        </div>
+      </div>
+
+      <!-- 弹窗：正式更新 -->
+      <div class="overlay" id="ov-update">
+        <div class="popup">
+          <div class="popup-hd update">
+            <span class="close" onclick="hide()">✕</span>
+            <div class="kicker">🎉 智控 ERP 已升级</div>
+            <h3>v3.2.0 更新说明</h3>
+            <div class="sub">2026-06-20 发布 · 预计阅读 1 分钟</div>
+          </div>
+          <div class="popup-bd">
+            <div class="text-2 small" style="background:#f5f7ff;border-radius:10px;padding:10px 12px;margin-bottom:6px;">本次升级聚焦「开单效率」与「报表性能」，新增批量开单与移动端审批提醒，并修复跨月结转金额问题，建议涉及结转的客户尽快升级。</div>
+            <div class="chg"><span class="tag add">＋ 新增</span><div><div class="t">批量开单与一键导入历史订单</div><div class="d">支持 Excel 模板批量导入，开单效率提升明显</div></div></div>
+            <div class="chg"><span class="tag add">＋ 新增</span><div><div class="t">移动端审批待办提醒</div><div class="d">审批事项实时推送到企业微信</div></div></div>
+            <div class="chg"><span class="tag opt">⤴ 优化</span><div><div class="t">报表加载速度提升约 40%</div><div class="d">大数据量报表更流畅</div></div></div>
+            <div class="chg"><span class="tag fix">🔧 修复</span><div><div class="t">修复跨月结转偶发金额错误</div><div class="d">涉及结转模块的客户建议尽快升级</div></div></div>
+          </div>
+          <div class="popup-ft">
+            <label class="flex center gap8 small text-2"><input type="checkbox" /> 不再提示此版本</label>
+            <span style="flex:1;"></span>
+            <button class="btn sm" onclick="hide()">查看完整日志</button>
+            <button class="btn sm primary" onclick="hide()">我知道了</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 弹窗：事前预告 -->
+      <div class="overlay" id="ov-notice" style="display:none;">
+        <div class="popup">
+          <div class="popup-hd notice">
+            <span class="close" onclick="hide()">✕</span>
+            <div class="kicker">⏰ 升级预告</div>
+            <h3>智控 ERP 将于 06-20 升级</h3>
+            <div class="sub">请提前安排业务，升级期间预计中断约 15 分钟</div>
+          </div>
+          <div class="popup-bd">
+            <div class="countdown">距离升级还有 <b>3 天</b> · 2026-06-20 02:00（凌晨）</div>
+            <div class="text-2 small" style="margin:8px 0 4px;">本次升级将带来：</div>
+            <div class="chg"><span class="tag add">＋ 新增</span><div class="t">批量开单、移动端审批提醒</div></div>
+            <div class="chg"><span class="tag opt">⤴ 优化</span><div class="t">报表加载速度大幅提升</div></div>
+            <div class="chg"><span class="tag fix">🔧 修复</span><div class="t">跨月结转金额问题</div></div>
+          </div>
+          <div class="popup-ft">
+            <span class="small text-3">强提醒 · 阅读后上报已读</span>
+            <span style="flex:1;"></span>
+            <button class="btn sm primary" onclick="hide()">知道了，已安排</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+<script>
+  function show(type){
+    document.getElementById('ov-update').style.display = type==='update' ? 'grid' : 'none';
+    document.getElementById('ov-notice').style.display = type==='notice' ? 'grid' : 'none';
+  }
+  function hide(){
+    document.getElementById('ov-update').style.display='none';
+    document.getElementById('ov-notice').style.display='none';
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>审批中心 · 版本更新通知工具</title>
+<link rel="stylesheet" href="assets/style.css" />
+<script src="assets/app.js" defer></script>
+</head>
+<body>
+<div id="admin-root" data-active="approval" data-crumb="审批中心">
+
+  <div class="page-head">
+    <div><h1>审批中心</h1><p>按产品线配置多级审批人，文案审批全程留痕，通过后方可发布</p></div>
+    <button class="btn">⚙ 审批流配置</button>
+  </div>
+
+  <div class="grid cols-3">
+    <div class="card stat"><span class="label">待我审批</span><span class="value" style="color:var(--warning)">5</span><span class="small text-3">含 2 条加急</span></div>
+    <div class="card stat"><span class="label">本月通过</span><span class="value">38</span><span class="small text-3">平均耗时 3.2h</span></div>
+    <div class="card stat"><span class="label">本月驳回</span><span class="value">6</span><span class="small text-3">主要为文案问题</span></div>
+  </div>
+
+  <div class="grid cols-2 mt16">
+    <!-- 待审批列表 -->
+    <div class="card">
+      <div class="card-title"><h3>待我审批</h3><span class="more">按产品线分配</span></div>
+      <table class="table">
+        <thead><tr><th>版本 / 文案</th><th>产品线</th><th>当前环节</th><th>操作</th></tr></thead>
+        <tbody>
+          <tr style="background:#f5f7ff;"><td><div class="bold">财务通 v2.4.0</div><div class="muted">2新增·1优化·1修复</div></td><td>财务通</td><td><span class="tag opt">二级·产品线负责人</span></td><td><a class="btn sm primary">审批</a></td></tr>
+          <tr><td><div class="bold">智控ERP v3.2.0</div><div class="muted">预告文案审批</div></td><td>智控 ERP</td><td><span class="tag opt">一级·产品经理</span></td><td><a class="btn sm primary">审批</a></td></tr>
+          <tr><td><div class="bold">云店 v5.9.0</div><div class="muted">5新增·3优化</div></td><td>云店 SaaS</td><td><span class="tag opt">一级·产品经理</span></td><td><a class="btn sm primary">审批</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 审批详情 + 流程节点 -->
+    <div class="card">
+      <div class="card-title"><h3>审批详情：财务通 v2.4.0</h3><span class="status review">审批中</span></div>
+
+      <div class="card" style="background:#fafbff;box-shadow:none;padding:12px 14px;margin-bottom:14px;">
+        <div class="small text-2"><b>更新文案预览</b></div>
+        <div class="flex wrap gap8 mt8">
+          <span class="tag add">＋ 新增 多账套合并报表</span>
+          <span class="tag add">＋ 新增 发票批量识别</span>
+          <span class="tag opt">⤴ 优化 月末结转性能</span>
+          <span class="tag fix">🔧 修复 凭证导出乱码</span>
+        </div>
+      </div>
+
+      <div class="small text-2 bold" style="margin-bottom:10px;">审批流（财务通产品线）</div>
+      <div class="flow-node pass">
+        <div class="flex center between"><div><b>一级 · 产品经理</b> <span class="text-3 small">张敏</span></div><span class="status published">已通过</span></div>
+        <div class="small text-3 mt8">意见：文案清晰，通过。 · 06-16 10:20</div>
+      </div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-node current">
+        <div class="flex center between"><div><b>二级 · 产品线负责人</b> <span class="text-3 small">李伟（你）</span></div><span class="status review">待处理</span></div>
+        <div class="flex gap8 mt16">
+          <input class="input" placeholder="填写审批意见…" style="flex:1;" />
+          <button class="btn danger sm">驳回</button>
+          <button class="btn primary sm">通过</button>
+        </div>
+      </div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-node">
+        <div class="flex center between"><div><b>三级 · 合规/总监</b> <span class="text-3 small">王总（会签）</span></div><span class="status draft">未开始</span></div>
+        <div class="small text-3 mt8">该产品线配置了三级会签，二级通过后进入。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 审批流配置 -->
+  <div class="card mt16">
+    <div class="card-title"><h3>各产品线审批流配置</h3><span class="more">不同产品线可配置不同层级</span></div>
+    <table class="table">
+      <thead><tr><th>产品线</th><th>审批层级</th><th>审批人</th><th>状态</th><th>操作</th></tr></thead>
+      <tbody>
+        <tr><td class="bold">智控 ERP</td><td>2 级</td><td>产品经理 → 产品线负责人</td><td><span class="status published">启用</span></td><td><a class="btn sm ghost">编辑</a></td></tr>
+        <tr><td class="bold">财务通</td><td>3 级（含会签）</td><td>产品经理 → 产品线负责人 → 合规会签</td><td><span class="status published">启用</span></td><td><a class="btn sm ghost">编辑</a></td></tr>
+        <tr><td class="bold">云店 SaaS</td><td>1 级</td><td>产品经理</td><td><span class="status published">启用</span></td><td><a class="btn sm ghost">编辑</a></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+</body>
+</html>

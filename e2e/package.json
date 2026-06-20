@@ -1,0 +1,15 @@
+{
+  "name": "release-notify-e2e",
+  "version": "0.1.0",
+  "private": true,
+  "description": "版本更新通知工具 - 浏览器级端到端联调（Playwright）",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "report": "playwright show-report",
+    "codegen": "playwright codegen http://localhost:5173"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.48.0"
+  }
+}

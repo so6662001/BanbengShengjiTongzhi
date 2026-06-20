@@ -1,0 +1,86 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: notify-admin-api
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/release_notify?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+    username: ${DB_USER:root}
+    password: ${DB_PASSWORD:root}
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    default-enum-type-handler: org.apache.ibatis.type.EnumTypeHandler
+  global-config:
+    db-config:
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+
+notify:
+  jwt:
+    secret: release-notify-secret-key-please-change-in-prod-0123456789
+    expire-seconds: 86400
+  wecom:
+    enabled: false           # 置 true 并填写下列参数后启用真实企微推送
+    corp-id: ""
+    secret: ""
+    agent-id: 0
+  job:
+    mode: spring             # spring(@Scheduled,默认) | xxl(XXL-JOB)
+    pre-notice-cron: "0 */5 * * * ?"
+  mq:
+    mode: inprocess          # inprocess(@Async,默认) | rocketmq
+  email:
+    enabled: false
+    from: noreply@example.com
+  sms:
+    enabled: false
+    gateway-url: ""
+    api-key: ""
+  dingtalk:
+    enabled: false
+    webhook: ""
+    secret: ""
+
+# RocketMQ（notify.mq.mode=rocketmq 时启用）
+# rocketmq:
+#   name-server: 127.0.0.1:9876
+#   producer:
+#     group: notify-producer
+
+# XXL-JOB（notify.job.mode=xxl 时启用）
+# xxl:
+#   job:
+#     admin:
+#       addresses: http://127.0.0.1:8080/xxl-job-admin
+#     access-token: ""
+#     executor:
+#       appname: notify-executor
+#       port: 9999
+
+# 邮件（notify.email.enabled=true 时配置）
+# spring:
+#   mail:
+#     host: smtp.example.com
+#     port: 465
+#     username: xxx
+#     password: xxx
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /doc.html

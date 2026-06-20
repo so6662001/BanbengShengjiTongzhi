@@ -1,0 +1,41 @@
+version: "3.8"
+
+# 本地一键启动依赖中间件：MySQL8 + Redis。
+# 首次启动会自动执行 sql/ 下的 schema.sql 与 seed.sql 初始化库表与演示数据。
+# RocketMQ 为二期替换 @Async 时再启用（见底部注释）。
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: notify-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: release_notify
+      TZ: Asia/Shanghai
+    ports:
+      - "3306:3306"
+    volumes:
+      - notify-mysql-data:/var/lib/mysql
+      - ./sql/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - ./sql/seed.sql:/docker-entrypoint-initdb.d/02-seed.sql:ro
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    container_name: notify-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - notify-redis-data:/data
+
+volumes:
+  notify-mysql-data:
+  notify-redis-data:
+
+# 二期启用 RocketMQ（替换进程内 @Async 推送）：
+#   namesrv:  apache/rocketmq:5.3.0  sh mqnamesrv  端口 9876
+#   broker:   apache/rocketmq:5.3.0  sh mqbroker -n namesrv:9876
