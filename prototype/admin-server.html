@@ -11,7 +11,7 @@
 <div id="admin-root" data-active="server" data-crumb="服务器管理">
 
   <div class="page-head">
-    <div><h1>服务器管理</h1><p>多服务器登记，客户按服务器归属，可用于按服务器灰度发布与统计</p></div>
+    <div><h1>服务器管理</h1><p>多服务器登记，<b>一台服务器可部署多个产品</b>；客户按服务器归属，可用于按服务器灰度发布与统计</p></div>
     <button class="btn primary">＋ 新增服务器</button>
   </div>
 
@@ -30,14 +30,14 @@
       </div>
     </div>
     <table class="table">
-      <thead><tr><th>名称 / 编码</th><th>所属产品</th><th>环境</th><th>地域</th><th>归属客户</th><th>状态</th><th>操作</th></tr></thead>
+      <thead><tr><th>名称 / 编码</th><th>部署产品（多个）</th><th>环境</th><th>地域</th><th>归属客户</th><th>状态</th><th>操作</th></tr></thead>
       <tbody>
-        <tr><td><div class="bold">华东生产 SH-01</div><div class="muted">srv-sh-01 · 47.x.x.10</div></td><td>智控 ERP</td><td><span class="tag opt">生产</span></td><td>上海</td><td>3,210</td><td><span class="status published">在线</span></td><td><a class="btn sm ghost">详情</a></td></tr>
-        <tr><td><div class="bold">华北生产 BJ-02</div><div class="muted">srv-bj-02 · 47.x.x.22</div></td><td>智控 ERP</td><td><span class="tag opt">生产</span></td><td>北京</td><td>2,640</td><td><span class="status published">在线</span></td><td><a class="btn sm ghost">详情</a></td></tr>
-        <tr><td><div class="bold">华南生产 GZ-03</div><div class="muted">srv-gz-03 · 47.x.x.31</div></td><td>云店 SaaS</td><td><span class="tag opt">生产</span></td><td>广州</td><td>1,820</td><td><span class="status published">在线</span></td><td><a class="btn sm ghost">详情</a></td></tr>
-        <tr><td><div class="bold">私有化 · 优品商贸</div><div class="muted">srv-pri-yp · 内网</div></td><td>智控 ERP（私有化）</td><td><span class="tag opt">生产</span></td><td>客户机房</td><td>1</td><td><span class="status published">在线</span></td><td><a class="btn sm ghost">详情</a></td></tr>
-        <tr><td><div class="bold">财务通生产 FC-01</div><div class="muted">srv-fc-01 · 47.x.x.55</div></td><td>财务通</td><td><span class="tag opt">生产</span></td><td>杭州</td><td>530</td><td><span class="status revoked">维护中</span></td><td><a class="btn sm ghost">详情</a></td></tr>
-        <tr><td><div class="bold">预发测试 STG-01</div><div class="muted">srv-stg-01 · 内网</div></td><td>全部</td><td><span class="tag gray">测试</span></td><td>杭州</td><td>—</td><td><span class="status published">在线</span></td><td><a class="btn sm ghost">详情</a></td></tr>
+        <tr><td><div class="bold">华东生产 SH-01</div><div class="muted">srv-sh-01 · 47.x.x.10</div></td><td><div class="flex wrap gap8"><span class="tag opt">智控 ERP</span><span class="tag opt">财务通</span><span class="tag opt">云店 SaaS</span></div></td><td><span class="tag gray">生产</span></td><td>上海</td><td>3,210</td><td><span class="status published">在线</span></td><td><a class="btn sm ghost">详情</a></td></tr>
+        <tr><td><div class="bold">华北生产 BJ-02</div><div class="muted">srv-bj-02 · 47.x.x.22</div></td><td><div class="flex wrap gap8"><span class="tag opt">智控 ERP</span><span class="tag opt">财务通</span></div></td><td><span class="tag gray">生产</span></td><td>北京</td><td>2,640</td><td><span class="status published">在线</span></td><td><a class="btn sm ghost">详情</a></td></tr>
+        <tr><td><div class="bold">华南生产 GZ-03</div><div class="muted">srv-gz-03 · 47.x.x.31</div></td><td><div class="flex wrap gap8"><span class="tag opt">云店 SaaS</span></div></td><td><span class="tag gray">生产</span></td><td>广州</td><td>1,820</td><td><span class="status published">在线</span></td><td><a class="btn sm ghost">详情</a></td></tr>
+        <tr><td><div class="bold">私有化 · 优品商贸</div><div class="muted">srv-pri-yp · 内网</div></td><td><div class="flex wrap gap8"><span class="tag opt">智控 ERP（私有化）</span></div></td><td><span class="tag gray">生产</span></td><td>客户机房</td><td>1</td><td><span class="status published">在线</span></td><td><a class="btn sm ghost">详情</a></td></tr>
+        <tr><td><div class="bold">财务通生产 FC-01</div><div class="muted">srv-fc-01 · 47.x.x.55</div></td><td><div class="flex wrap gap8"><span class="tag opt">财务通</span></div></td><td><span class="tag gray">生产</span></td><td>杭州</td><td>530</td><td><span class="status revoked">维护中</span></td><td><a class="btn sm ghost">详情</a></td></tr>
+        <tr><td><div class="bold">预发测试 STG-01</div><div class="muted">srv-stg-01 · 内网</div></td><td><div class="flex wrap gap8"><span class="tag gray">智控 ERP</span><span class="tag gray">云店 SaaS</span><span class="tag gray">财务通</span></div></td><td><span class="tag gray">测试</span></td><td>杭州</td><td>—</td><td><span class="status published">在线</span></td><td><a class="btn sm ghost">详情</a></td></tr>
       </tbody>
     </table>
   </div>
@@ -47,10 +47,17 @@
     <div class="row">
       <div class="field"><label>服务器名称</label><input class="input" placeholder="如：华东生产 SH-01" /></div>
       <div class="field"><label>编码</label><input class="input" placeholder="srv-sh-01" /></div>
-      <div class="field"><label>所属产品</label><select class="select"><option>智控 ERP</option><option>云店 SaaS</option><option>财务通</option></select></div>
+      <div class="field"><label>环境</label><select class="select"><option>生产</option><option>测试</option></select></div>
+    </div>
+    <div class="field"><label>部署产品（可多选，一台服务器可部署多个产品）</label>
+      <div class="flex wrap gap8">
+        <span class="chip on">智控 ERP</span>
+        <span class="chip on">财务通</span>
+        <span class="chip">云店 SaaS</span>
+        <span class="chip">智控 ERP（私有化）</span>
+      </div>
     </div>
     <div class="row">
-      <div class="field"><label>环境</label><select class="select"><option>生产</option><option>测试</option></select></div>
       <div class="field"><label>地域</label><input class="input" placeholder="上海" /></div>
       <div class="field"><label>接入地址 base_url</label><input class="input" placeholder="https://sh01.api.xxx.com" /></div>
     </div>
