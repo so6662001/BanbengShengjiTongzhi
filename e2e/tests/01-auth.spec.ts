@@ -9,7 +9,8 @@ test.describe('登录鉴权', () => {
 
   test('正确账号可登录并进入工作台', async ({ page }) => {
     await login(page, USERS.admin)
-    await expect(page.getByText('数据看板')).toBeVisible()
+    await expect(page).toHaveURL(/\/dashboard/)
+    await expect(page.getByRole('heading', { name: '数据看板' })).toBeVisible()
   })
 
   test('错误密码应提示失败', async ({ page }) => {

@@ -20,8 +20,10 @@ export async function navTo(page: Page, menuText: string) {
   await page.getByRole('menuitem', { name: menuText }).click()
 }
 
-/** Element Plus 下拉选择：点击触发器后选中含指定文案的选项。 */
+/** Element Plus 下拉选择：点击触发器后在“当前可见”的下拉里选中含指定文案的选项。 */
 export async function selectOption(page: Page, triggerLocator: string, optionText: string) {
   await page.locator(triggerLocator).click()
-  await page.locator('.el-select-dropdown__item', { hasText: optionText }).first().click()
+  // 下拉是 teleport 到 body 的 popper，页面可能存在多个（含隐藏的），需限定可见者
+  const visibleDropdown = page.locator('.el-select-dropdown:visible')
+  await visibleDropdown.locator('.el-select-dropdown__item', { hasText: optionText }).first().click()
 }
