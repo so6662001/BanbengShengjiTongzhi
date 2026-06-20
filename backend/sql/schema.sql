@@ -16,7 +16,7 @@ CREATE TABLE product (
   identity_mode VARCHAR(16)  NOT NULL DEFAULT 'LICENSE' COMMENT 'LICENSE/TENANT/DEVICE',
   status        VARCHAR(16)  NOT NULL DEFAULT 'ENABLED',
   create_by BIGINT NULL, create_time DATETIME NULL, update_by BIGINT NULL, update_time DATETIME NULL, deleted TINYINT NOT NULL DEFAULT 0,
-  UNIQUE KEY uk_product_code (code, deleted)
+  KEY idx_product_code (code)  -- 唯一性在应用层按 deleted=0 校验（避免逻辑删除与唯一键冲突）
 ) COMMENT='产品';
 
 CREATE TABLE server_node (
@@ -28,7 +28,7 @@ CREATE TABLE server_node (
   base_url  VARCHAR(255) NULL,
   status    VARCHAR(16)  NOT NULL DEFAULT 'ENABLED',
   create_by BIGINT NULL, create_time DATETIME NULL, update_by BIGINT NULL, update_time DATETIME NULL, deleted TINYINT NOT NULL DEFAULT 0,
-  UNIQUE KEY uk_server_code (code, deleted)
+  KEY idx_server_code (code)
 ) COMMENT='服务器节点';
 
 CREATE TABLE server_product (
@@ -36,7 +36,7 @@ CREATE TABLE server_product (
   server_node_id BIGINT NOT NULL,
   product_id     BIGINT NOT NULL,
   create_by BIGINT NULL, create_time DATETIME NULL, update_by BIGINT NULL, update_time DATETIME NULL, deleted TINYINT NOT NULL DEFAULT 0,
-  UNIQUE KEY uk_server_product (server_node_id, product_id, deleted),
+  KEY idx_server_product (server_node_id, product_id),
   KEY idx_sp_product (product_id)
 ) COMMENT='服务器-产品 多对多';
 
@@ -59,7 +59,7 @@ CREATE TABLE customer_product (
   server_node_id  BIGINT      NOT NULL,
   current_version VARCHAR(32) NULL,
   create_by BIGINT NULL, create_time DATETIME NULL, update_by BIGINT NULL, update_time DATETIME NULL, deleted TINYINT NOT NULL DEFAULT 0,
-  UNIQUE KEY uk_cust_product (customer_id, product_id, deleted),
+  KEY idx_cust_product (customer_id, product_id),
   KEY idx_cp_product_server (product_id, server_node_id)
 ) COMMENT='客户-产品-服务器 归属';
 
@@ -70,7 +70,7 @@ CREATE TABLE customer_identity (
   identity_type  VARCHAR(16)  NOT NULL,
   identity_value VARCHAR(255) NOT NULL,
   create_by BIGINT NULL, create_time DATETIME NULL, update_by BIGINT NULL, update_time DATETIME NULL, deleted TINYINT NOT NULL DEFAULT 0,
-  UNIQUE KEY uk_identity (product_id, identity_type, identity_value, deleted)
+  KEY idx_identity (product_id, identity_type, identity_value)
 ) COMMENT='客户身份映射';
 
 CREATE TABLE app_version (
@@ -82,7 +82,7 @@ CREATE TABLE app_version (
   plan_release_time DATETIME     NULL,
   status            VARCHAR(16)  NOT NULL DEFAULT 'DRAFT',
   create_by BIGINT NULL, create_time DATETIME NULL, update_by BIGINT NULL, update_time DATETIME NULL, deleted TINYINT NOT NULL DEFAULT 0,
-  UNIQUE KEY uk_product_version (product_id, version_no, deleted),
+  KEY idx_product_version (product_id, version_no),
   KEY idx_version_status (status)
 ) COMMENT='版本';
 
@@ -174,7 +174,7 @@ CREATE TABLE delivery_task (
   status         VARCHAR(16)  NOT NULL DEFAULT 'PENDING',
   idempotent_key VARCHAR(128) NOT NULL,
   create_by BIGINT NULL, create_time DATETIME NULL, update_by BIGINT NULL, update_time DATETIME NULL, deleted TINYINT NOT NULL DEFAULT 0,
-  UNIQUE KEY uk_task_idem (idempotent_key, deleted),
+  UNIQUE KEY uk_task_idem (idempotent_key),  -- 投递任务不做逻辑删除，强幂等
   KEY idx_task_sched (status, scheduled_time)
 ) COMMENT='投递任务';
 
@@ -189,7 +189,7 @@ CREATE TABLE delivery_record (
   read_time      DATETIME    NULL,
   fail_reason    VARCHAR(255) NULL,
   create_by BIGINT NULL, create_time DATETIME NULL, update_by BIGINT NULL, update_time DATETIME NULL, deleted TINYINT NOT NULL DEFAULT 0,
-  UNIQUE KEY uk_record (task_id, customer_id, channel, deleted),
+  UNIQUE KEY uk_record (task_id, customer_id, channel),  -- 发送幂等，不做逻辑删除
   KEY idx_record_customer_read (customer_id, read_status),
   KEY idx_record_ann (announcement_id)
 ) COMMENT='逐客户触达记录';
@@ -212,5 +212,5 @@ CREATE TABLE sys_user (
   roles    VARCHAR(255) NULL,
   status   VARCHAR(16)  NOT NULL DEFAULT 'ENABLED',
   create_by BIGINT NULL, create_time DATETIME NULL, update_by BIGINT NULL, update_time DATETIME NULL, deleted TINYINT NOT NULL DEFAULT 0,
-  UNIQUE KEY uk_username (username, deleted)
+  KEY idx_username (username)
 ) COMMENT='后台用户';

@@ -86,9 +86,9 @@ public class ReleasePlanService implements ApprovalListener {
         ReleasePlan plan = getById(planId);
         plan.setStatus(VersionStatus.SCHEDULED);
         planMapper.updateById(plan);
-        // 版本同步进入定时待发
-        appVersionService.transferStatus(plan.getVersionId(), VersionStatus.APPROVED);
-        appVersionService.transferStatus(plan.getVersionId(), VersionStatus.SCHEDULED);
+        // 版本同步进入定时待发（守卫式流转：版本可能已是 APPROVED/SCHEDULED，非法流转则跳过，避免中断审批）
+        appVersionService.tryTransfer(plan.getVersionId(), VersionStatus.APPROVED);
+        appVersionService.tryTransfer(plan.getVersionId(), VersionStatus.SCHEDULED);
     }
 
     /** 审批驳回 → 退回草稿。 */

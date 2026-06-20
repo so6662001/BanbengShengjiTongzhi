@@ -116,6 +116,20 @@ public class AppVersionService implements ApprovalListener {
         appVersionMapper.updateById(v);
     }
 
+    /** 尝试流转，非法则跳过并返回 false（用于发布计划审批联动版本状态，避免抛异常中断主流程）。 */
+    public boolean tryTransfer(Long versionId, VersionStatus target) {
+        AppVersion v = getById(versionId);
+        if (v.getStatus() == target) {
+            return true;
+        }
+        if (!v.getStatus().canTransferTo(target)) {
+            return false;
+        }
+        v.setStatus(target);
+        appVersionMapper.updateById(v);
+        return true;
+    }
+
     /** 弹窗预览聚合（版本说明 + 分类条目），客户端与日志页共用。 */
     public VersionPreviewVO preview(Long versionId) {
         AppVersion v = getById(versionId);
