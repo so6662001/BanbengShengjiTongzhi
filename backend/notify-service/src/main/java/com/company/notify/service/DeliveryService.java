@@ -5,10 +5,13 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.company.notify.common.enums.Channel;
 import com.company.notify.common.enums.DeliveryTaskStatus;
 import com.company.notify.domain.entity.Announcement;
+import com.company.notify.domain.entity.AppVersion;
 import com.company.notify.domain.entity.DeliveryTask;
+import com.company.notify.domain.mapper.AppVersionMapper;
 import com.company.notify.domain.mapper.DeliveryTaskMapper;
 import com.company.notify.push.MessageContent;
 import com.company.notify.push.PushDispatcher;
+import com.company.notify.service.support.ClientUnreadCache;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +29,8 @@ public class DeliveryService {
     private final DeliveryTaskMapper taskMapper;
     private final AudienceService audienceService;
     private final PushDispatcher pushDispatcher;
+    private final AppVersionMapper appVersionMapper;
+    private final ClientUnreadCache unreadCache;
 
     /**
      * 为公告在多个渠道创建投递任务并立即分发（用于正式发布或已到点的预告）。
@@ -34,6 +39,8 @@ public class DeliveryService {
     public void createAndDispatch(Announcement announcement, Long audienceId,
                                   List<Channel> channels, String scheduledKey) {
         List<Long> customerIds = audienceService.resolveCustomerIds(audienceId);
+        // 新投递将产生未读，先失效这些客户的未读缓存，避免命中旧的过期数据
+        evictUnreadCache(announcement, customerIds);
         MessageContent content = MessageContent.builder()
                 .title(announcement.getTitle())
                 .body(announcement.getPopupContent())
@@ -55,6 +62,16 @@ public class DeliveryService {
             task.setIdempotentKey(idemKey);
             taskMapper.insert(task);
             pushDispatcher.dispatch(task, customerIds, content);
+        }
+    }
+
+    private void evictUnreadCache(Announcement announcement, List<Long> customerIds) {
+        AppVersion version = appVersionMapper.selectById(announcement.getVersionId());
+        if (version == null) {
+            return;
+        }
+        for (Long customerId : customerIds) {
+            unreadCache.evict(version.getProductId(), customerId);
         }
     }
 

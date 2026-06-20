@@ -3,15 +3,19 @@ package com.company.notify.service.support;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.company.notify.common.exception.BizException;
 import com.company.notify.common.exception.ErrorCode;
 
 import java.util.List;
 
-/** 轻量 JSON 工具，用于 channels / preNotifyDays / audience 条件等字段的序列化。 */
+/** 轻量 JSON 工具，用于 channels / preNotifyDays / audience 条件、未读缓存等的序列化。 */
 public final class JsonUtil {
 
     private static final ObjectMapper MAPPER = new ObjectMapper()
+            .registerModule(new JavaTimeModule())  // 支持 LocalDateTime（未读缓存等含时间字段）
+            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
     private JsonUtil() {}

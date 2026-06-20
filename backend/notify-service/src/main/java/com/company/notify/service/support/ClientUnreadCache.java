@@ -47,6 +47,10 @@ public class ClientUnreadCache {
         if (redis == null) {
             return;
         }
+        // 不缓存空结果，避免冷启动/无数据时把空列表写入污染后续投递
+        if (data == null || data.isEmpty()) {
+            return;
+        }
         try {
             redis.opsForValue().set(key(productId, customerId), JsonUtil.toJson(data), TTL);
         } catch (Exception e) {
