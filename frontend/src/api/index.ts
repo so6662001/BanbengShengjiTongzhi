@@ -30,6 +30,9 @@ export const versionApi = {
 export const customerApi = {
   page: (params: any) => request.get('/admin/customer', { params }),
   create: (data: any) => request.post('/admin/customer', data),
+  update: (data: any) => request.put('/admin/customer', data),
+  products: (id: string | number) => request.get(`/admin/customer/${id}/products`),
+  upsertBinding: (data: any) => request.post('/admin/customer/binding', data),
 }
 
 export const audienceApi = {

@@ -10,6 +10,7 @@ const routes: RouteRecordRaw[] = [
       { path: 'dashboard', name: '数据看板', component: () => import('@/views/Dashboard.vue') },
       { path: 'version', name: '版本管理', component: () => import('@/views/Version.vue') },
       { path: 'server', name: '服务器管理', component: () => import('@/views/Server.vue') },
+      { path: 'customer', name: '客户管理', component: () => import('@/views/Customer.vue') },
       { path: 'audience', name: '客户分层', component: () => import('@/views/Audience.vue') },
       { path: 'release', name: '发布流程', component: () => import('@/views/Release.vue') },
       { path: 'approval', name: '审批中心', component: () => import('@/views/Approval.vue') },

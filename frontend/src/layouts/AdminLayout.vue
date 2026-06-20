@@ -7,6 +7,7 @@
         <el-menu-item index="/dashboard"><el-icon><DataAnalysis /></el-icon><span>数据看板</span></el-menu-item>
         <el-menu-item index="/version"><el-icon><Files /></el-icon><span>版本管理</span></el-menu-item>
         <el-menu-item index="/server"><el-icon><Monitor /></el-icon><span>服务器管理</span></el-menu-item>
+        <el-menu-item index="/customer"><el-icon><User /></el-icon><span>客户管理</span></el-menu-item>
         <el-menu-item index="/audience"><el-icon><Aim /></el-icon><span>客户分层</span></el-menu-item>
         <el-menu-item index="/release"><el-icon><Promotion /></el-icon><span>发布流程</span></el-menu-item>
         <el-menu-item index="/approval"><el-icon><Select /></el-icon><span>审批中心</span></el-menu-item>
