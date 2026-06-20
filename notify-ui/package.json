@@ -15,7 +15,8 @@
     "./style.css": "./dist/notify-ui.css"
   },
   "scripts": {
-    "build": "vue-tsc --noEmit && vite build"
+    "build": "vue-tsc --noEmit && vite build",
+    "demo": "vite --config vite.demo.config.ts"
   },
   "peerDependencies": {
     "vue": "^3.3.0"

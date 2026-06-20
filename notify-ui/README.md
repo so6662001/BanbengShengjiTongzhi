@@ -52,3 +52,9 @@ import '@company/notify-ui/style.css'
 pnpm install
 pnpm build   # 产出 dist/notify-ui.js (ESM) + umd + style.css
 ```
+
+## 本地 Demo（:5174，可连真实 client-api）
+```
+pnpm demo    # 启动 demo/，已代理 /client → http://localhost:8082
+```
+Demo 提供：mock 弹窗预览、连真实 client-api 的「一行初始化自动弹窗」、嵌入式更新日志页。
