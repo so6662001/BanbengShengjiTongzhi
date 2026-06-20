@@ -1,0 +1,45 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: notify-admin-api
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/release_notify?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+    username: ${DB_USER:root}
+    password: ${DB_PASSWORD:root}
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    default-enum-type-handler: org.apache.ibatis.type.EnumTypeHandler
+  global-config:
+    db-config:
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+
+notify:
+  jwt:
+    secret: release-notify-secret-key-please-change-in-prod-0123456789
+    expire-seconds: 86400
+  wecom:
+    enabled: false
+  job:
+    pre-notice-cron: "0 */5 * * * ?"
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /doc.html
