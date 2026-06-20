@@ -1,0 +1,31 @@
+{
+  "name": "@company/notify-ui",
+  "version": "0.1.0",
+  "description": "版本更新通知 - 可复用 Vue3 组件库（更新弹窗 / 更新日志页 / 一键初始化）",
+  "type": "module",
+  "files": ["dist"],
+  "main": "./dist/notify-ui.umd.cjs",
+  "module": "./dist/notify-ui.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/notify-ui.js",
+      "require": "./dist/notify-ui.umd.cjs"
+    },
+    "./style.css": "./dist/notify-ui.css"
+  },
+  "scripts": {
+    "build": "vue-tsc --noEmit && vite build"
+  },
+  "peerDependencies": {
+    "vue": "^3.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.4",
+    "@vitejs/plugin-vue": "^5.1.4",
+    "typescript": "^5.6.2",
+    "vite": "^5.4.8",
+    "vue": "^3.5.11",
+    "vue-tsc": "^2.1.6"
+  }
+}

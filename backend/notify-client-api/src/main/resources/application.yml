@@ -32,3 +32,8 @@ knife4j:
 notify:
   wecom:
     enabled: false
+  client:
+    sign-enabled: false        # 演示默认关闭；生产置 true 强制签名
+    sign-secret: client-shared-secret-change-me
+    sign-tolerance-sec: 300
+    rate-limit-per-sec: 20

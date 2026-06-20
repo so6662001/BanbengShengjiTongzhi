@@ -20,6 +20,7 @@ import com.company.notify.domain.mapper.AppVersionMapper;
 import com.company.notify.domain.mapper.DeliveryRecordMapper;
 import com.company.notify.domain.mapper.FeedbackMapper;
 import com.company.notify.service.identity.IdentityResolverRegistry;
+import com.company.notify.service.support.ClientUnreadCache;
 import com.company.notify.service.vo.UnreadAnnouncementVO;
 import com.company.notify.service.vo.VersionPreviewVO;
 import lombok.RequiredArgsConstructor;
@@ -43,11 +44,17 @@ public class ClientService {
     private final AppVersionMapper appVersionMapper;
     private final AppVersionService appVersionService;
     private final FeedbackMapper feedbackMapper;
+    private final ClientUnreadCache unreadCache;
 
-    /** 启动拉取未读公告（仅本客户、本产品）。 */
+    /** 启动拉取未读公告（仅本客户、本产品）。未读集合走 Redis 缓存。 */
     public List<UnreadAnnouncementVO> unread(String productCode, String identityValue) {
         Product product = identityRegistry.getProductByCode(productCode);
         Long customerId = identityRegistry.resolve(productCode, identityValue);
+
+        List<UnreadAnnouncementVO> cached = unreadCache.get(product.getId(), customerId);
+        if (cached != null) {
+            return cached;
+        }
 
         List<DeliveryRecord> records = recordMapper.selectList(new LambdaQueryWrapper<DeliveryRecord>()
                 .eq(DeliveryRecord::getCustomerId, customerId)
@@ -74,11 +81,13 @@ public class ClientService {
             vo.setForceRead(ann.getType() == AnnouncementType.PRE_NOTICE);
             result.add(vo);
         }
+        unreadCache.put(product.getId(), customerId, result);
         return result;
     }
 
-    /** 已读上报（幂等：仅未读→已读）。 */
+    /** 已读上报（幂等：仅未读→已读），并清除该客户未读缓存。 */
     public void markRead(Long announcementId, String productCode, String identityValue) {
+        Product product = identityRegistry.getProductByCode(productCode);
         Long customerId = identityRegistry.resolve(productCode, identityValue);
         recordMapper.update(null, new LambdaUpdateWrapper<DeliveryRecord>()
                 .eq(DeliveryRecord::getAnnouncementId, announcementId)
@@ -86,6 +95,7 @@ public class ClientService {
                 .eq(DeliveryRecord::getReadStatus, ReadStatus.UNREAD)
                 .set(DeliveryRecord::getReadStatus, ReadStatus.READ)
                 .set(DeliveryRecord::getReadTime, LocalDateTime.now()));
+        unreadCache.evict(product.getId(), customerId);
     }
 
     /** 历史更新日志（已发布版本），可按分类过滤条目。 */

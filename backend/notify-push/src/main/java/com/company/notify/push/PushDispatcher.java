@@ -61,17 +61,36 @@ public class PushDispatcher {
         }
     }
 
+    /** 单次发送最大重试次数（含首次）。生产改 MQ 后由消费者重试 + 死信队列承接。 */
+    private static final int MAX_ATTEMPTS = 3;
+
     private void sendOne(DeliveryTask task, Long customerId, MessageContent content, MessageChannel channel) {
         DeliveryRecord record = ensureRecord(task, customerId);
         if (record.getSendStatus() == SendStatus.SENT) {
             return; // 幂等：已送达不重复发送
         }
         Customer customer = customerMapper.selectById(customerId);
-        boolean ok = customer != null && channel.send(customer, content);
-        record.setSendStatus(ok ? SendStatus.SENT : SendStatus.FAIL);
-        if (!ok) {
-            record.setFailReason("渠道发送失败或客户不存在");
+        if (customer == null) {
+            record.setSendStatus(SendStatus.FAIL);
+            record.setFailReason("客户不存在");
+            recordMapper.updateById(record);
+            return;
         }
+        boolean ok = false;
+        String lastError = null;
+        for (int attempt = 1; attempt <= MAX_ATTEMPTS && !ok; attempt++) {
+            try {
+                ok = channel.send(customer, content);
+                if (!ok) {
+                    lastError = "渠道返回失败(第" + attempt + "次)";
+                }
+            } catch (Exception e) {
+                lastError = "异常(第" + attempt + "次): " + e.getMessage();
+                log.warn("推送重试 task={} customer={} attempt={}", task.getId(), customerId, attempt, e);
+            }
+        }
+        record.setSendStatus(ok ? SendStatus.SENT : SendStatus.FAIL);
+        record.setFailReason(ok ? null : lastError);
         recordMapper.updateById(record);
     }
 
