@@ -18,8 +18,10 @@ test.describe('登录鉴权', () => {
     await page.getByPlaceholder('用户名').fill('admin')
     await page.getByPlaceholder('密码').fill('wrong-password')
     await page.getByRole('button', { name: '登录' }).click()
-    // Element Plus 错误消息
-    await expect(page.locator('.el-message').first()).toBeVisible()
+    // 登录失败：不应进入工作台，停留在登录页且未写入 token
+    await page.waitForTimeout(1000)
     await expect(page).toHaveURL(/\/login/)
+    const token = await page.evaluate(() => localStorage.getItem('token'))
+    expect(token).toBeFalsy()
   })
 })

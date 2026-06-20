@@ -7,9 +7,10 @@
    ```
    cd ../backend && docker compose up -d        # MySQL + Redis（自动执行 sql/schema.sql、seed.sql）
    ```
-2. 启动后端：
+2. 启动后端（两个服务）：
    ```
-   cd ../backend && mvn -pl notify-admin-api -am spring-boot:run   # :8081
+   cd ../backend && java -jar notify-admin-api/target/notify-admin-api.jar    # :8081
+   cd ../backend && java -jar notify-client-api/target/notify-client-api.jar  # :8082（04 跨服务用例需要）
    ```
 3. 启动前端 dev server：
    ```
@@ -32,6 +33,7 @@ pnpm report                 # 查看 HTML 报告
 - `01-auth.spec.ts`：未登录跳转、正确登录、错误密码提示。
 - `02-navigation.spec.ts`：六大菜单页可正常打开。
 - `03-release-flow.spec.ts`：管理员建版本(含条目+说明) → 提交审批 → 产品经理/产品线负责人两级审批通过（多浏览器上下文模拟多角色）。
+- `04-publish-client.spec.ts`：跨服务（admin-api + client-api）真实 HTTP——发布 → 客户端拉未读 → 已读上报 → 看板阅读率体现。可用 `E2E_ADMIN_URL` / `E2E_CLIENT_URL` 覆盖地址。
 
 ## 说明
 - 演示账号：admin / pm / owner，密码均 admin123。
